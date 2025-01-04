@@ -1,0 +1,20 @@
+- Steps followed to run the services (FrontEnd, DB and BackEnd) separately using docker file for this project.
+
+1) Create network "mern".
+docker network create mern
+
+2) Build image for frontend using the Dockerfile and run the container.
+docker build -t mern-frontend .
+docker run --name=frontend --network=mern -d -p 5173:5173 mern-frontend
+
+3) Run the mongo db container
+docker run --network=mern --name mongodb -d -p 27017:27017 -v ~/opt/data:/data/db/ mongo:7.0
+
+4) Build image for backend using the Dockerfile and run the container.
+docker build -t mern-backend .
+docker run --network=mern --name=backend -d -p 5050:5050 mern-backend
+
+
+- Steps followed to run the services (FrontEnd, DB and BackEnd) at one go using docker compose for this project.
+
+docker compose up -d
